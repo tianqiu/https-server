@@ -15,7 +15,7 @@ epoll = select.epoll()
 epoll.register(serversocket.fileno(), select.EPOLLIN)
 cwd=os.getcwd()
 
-def dealphp(path):
+def dealphp(path,url):
     if len(url.split('?'))>1:
         can=url.split('?')[1]
         cann=can.split('&')
@@ -50,9 +50,9 @@ def dealresponse(request):
     method=request.split(' ')[0]
     url=request.split(' ')[1]
     path=url.split('?')[0]
-    if method=='GET':
+    if method=='GET' or method=='POST':
         if path=='/':
-            f=open("1.html","rb")
+            f=open("index.html","rb")
             x=header+f.read()
             f.close()
             return x
@@ -62,11 +62,11 @@ def dealresponse(request):
                 if types=='html':
                     return dealhtml(path)
                 elif types=='php':
-                    dealphp(path)
+                    return dealphp(path,url)
                 elif (types=='js' or types=='css'):
                     return dealjs(path)
                 elif types=='py':
-                    dealpy(path)
+                    return dealpy(path)
             else:
                 return " "   
 
