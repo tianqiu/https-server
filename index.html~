@@ -5,6 +5,7 @@
 <link rel="shortcut icon" href="Images/favicon.ico" type="image/x-icon" /> 
 </head> 
 <html>
+<<<<<<< HEAD
 <body background='bg4.jpg'> 
 <center><h1>Chatroom</h1></center>
 
@@ -84,10 +85,9 @@ window.setInterval("get('undefined')",1000);
 <div id="divmsg" class="cdiv">
 <center><p><span id="txtHint"></span></p></center> 
 </div>
-<center><p id="di">Please Input Message</p></center>
+<center><p id="di">Please Input Message:</p></center>
 <center><input type="text" onkeypress="onkey(event)" id = 'message' name="firstname" charset=UTF-8" />
 <button onclick="get(loadFromInput())" id="send">Enter</button></center>
-
 
 <body>
 </html>

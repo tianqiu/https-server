@@ -1,0 +1,3 @@
+<center>ads:sda</center>
+<center>qiu:ad</center>
+<center>qiu:ads</center>
