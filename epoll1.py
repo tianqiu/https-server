@@ -46,7 +46,7 @@ def dealphp(path,url,method,request,types):
                 os.system('rm '+cwd+path[0:-2]+' -f') 
             else:
                 v=os.popen(types+' '+cwd+path)
-            return header+v.read()
+            return v.read()
     else:
         po=request.split('\n\r\n')[1]
         if po!='':
@@ -94,6 +94,24 @@ def dealresponse(request):
     path=url.split('?')[0]
     if method=='GET' or method=='POST':
         if path=='/':
+            if method=='POST':
+                po=request.split('\n\r\n')[1]
+                print "po"
+                cann=po.split('&')
+                print 'cann'
+                a=[i.split('=')[1] for i in cann]
+                print a
+                b=' '
+                i=0
+                while i<len(a):
+                    b=b+' '+a[i]
+                    i=i+1
+                print b
+   
+              #  v=os.popen('python '+cwd+path+b).read()
+              #  os.system('python sub.py'+b)
+               # v='liaotian'
+               # return v
             f=open("index.html","rb")
             x=header+f.read()
             f.close()
@@ -101,6 +119,23 @@ def dealresponse(request):
         else:
             if os.path.exists(cwd+path):
                 types=path.split('.')[-1]
+                b=' '
+                if len(url.split('?'))>1:
+                    can=url.split('?')[1]
+                    cann=can.split('&')
+                    a=[i.split('=')[1] for i in cann]
+                    i=0
+                    while i<len(a):
+                        b=b+' '+a[i]
+                        i=i+1
+                if path=='/his.txt':
+                    if a[0]!='undefined':
+                        b=urllib.unquote(b)
+                        v=os.system('python sub.py '+b)
+                    f=open("his.txt","r")
+                    v=f.read()
+                    f.close()
+                    return v
                 if types=='html':
                     return dealhtml(path)
                 elif types=='php' or types=='py' or types=='c' or types=='sh':
@@ -162,6 +197,8 @@ try:
                     epoll.modify(fileno, select.EPOLLOUT)
                     print('-'*40 + '\n' + requests[fileno])
                     responses[fileno]=dealresponse(requests[fileno])
+                    if responses[fileno]=='liaotian':
+                        epoll.modify(fileno, 0)
             elif event & select.EPOLLOUT:
                 print ("c")
                 while True:

@@ -5,14 +5,89 @@
 <link rel="shortcut icon" href="Images/favicon.ico" type="image/x-icon" /> 
 </head> 
 <html>
-<body background='xianjian.jpg'> 
-<script src="myscript.js"></script>
-<IMG src='test.jpg'> 
-<form name="input" action="c.c" method="post">
-<meta charset=UTF-8" /> 
-Please Input Message:<input type="text" name="firstname" charset=UTF-8"><input type="text" name="second" charset=UTF-8">
-<input type="submit" value="发送">
-</form>
+<body background='bg4.jpg'> 
+<center><h1>Chatroom</h1></center>
+
+<style type="text/css">
+.cdiv{
+    background-color: white;
+    background-image: url(bg4.jpg);
+    margin:auto;
+    height: 370px;
+    width: 600px;
+    padding-left: 0;
+    overflow-y: scroll;
+    position: relative;
+    word-wrap: break-word;
+    overflow-x: auto;
+    
+    }            
+</style>
+
+<script>
+var t1='';
+var t2='';
+var myname='none';
+function onkey(e) 
+        { var c ;
+           if(window.event) // IE
+            {
+            c= e.keyCode;
+            }
+           else if(e.which) // Netscape/Firefox/Opera
+           {
+           c = e.which;
+             }
+           
+            if(c==13) 
+            { 
+            document.getElementById("send").click(); 
+            } 
+        } 
+
+function get(str)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+     t2=xmlhttp.responseText;
+    if(str!='undefined'||t1!=t2)
+       {var div = document.getElementById("divmsg");
+       div.scrollTop = div.scrollHeight;}
+    t1=xmlhttp.responseText;
+     }
+  }
+xmlhttp.open("GET","his.txt?q="+str+"&n="+myname,true);
+xmlhttp.send();
+}
+function loadFromInput(){
+	 x=document.getElementById('message').value;
+       document.getElementById("message").value='';
+       return x;
+}
+myname= prompt("Please Input Your Name:","");
+window.setInterval("get('undefined')",1000);
+</script>
+
+
+<div id="divmsg" class="cdiv">
+<center><p><span id="txtHint"></span></p></center> 
+</div>
+<center><p id="di">Please Input Message:</p></center>
+<center><input type="text" onkeypress="onkey(event)" id = 'message' name="firstname" charset=UTF-8" />
+<button onclick="get(loadFromInput())" id="send">Enter</button></center>
+
+
 <body>
 </html>
-<p>HELLO</p><p>WORLD!!</p>
