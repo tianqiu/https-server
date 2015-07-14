@@ -14,7 +14,6 @@ if __name__ == "__main__":
             connstream = context.wrap_socket(newsocket, server_side=True)
             data = connstream.recv(1024)
             data=urllib.unquote(data)
-           # data = data.encode(encoding)
             print "1"
             print(data)
             method=data.split(' ')[0]
