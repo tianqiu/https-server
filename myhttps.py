@@ -156,16 +156,10 @@ try:
                 print ("a")
                 connection, address = serversocket.accept()
                 connection.setblocking(0)
-                print connection.fileno()               
-                connection.setblocking(0)
+                #print connection.fileno()               
                 epoll.register(connection.fileno(), select.EPOLLIN)
                 connstream[connection.fileno()] = context.wrap_socket(connection, server_side=True,do_handshake_on_connect=False)
                 connstream[connection.fileno()].setblocking(0)
-                try:
-                    connstream[connection.fileno()].do_handshake()
-                except ssl.SSLWantReadError:
-                    print "aa"
-                    pass
                 connections[connection.fileno()] = connection
                 requests[connection.fileno()] = b''
                 responses[connection.fileno()] = b''
